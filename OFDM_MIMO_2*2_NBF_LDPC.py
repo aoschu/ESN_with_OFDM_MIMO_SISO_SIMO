@@ -1,6 +1,6 @@
-# Demo_OFDM_SISO_ChannelRank_TrainSNR_LDPC_fast.py
+# Demo_MIMO_2x2_ChannelRank_TrainSNR_LDPC_fast.py
 # --------------------------------------------------
-# Adapted from MIMO 4x8 to SISO (1x1)
+# Adapted from MIMO 4x8 to MIMO 2x2
 # Faster run variant:
 #  - FAST mode shrinks N, SNR grid, NumOfdmSymbols
 #  - Decodes LDPC only every k-th data symbol (subsampling)
@@ -139,11 +139,11 @@ if FAST:
 else:
     EbNoDB = np.arange(0, 31, 3).astype(np.int32)
 
-N_t = 1
-N_r = 1
+N_t = 2
+N_r = 2
 
 if FAST:
-    N = 256                   # fewer subcarriers -> shorter codeword
+    N = 128                   # fewer subcarriers -> shorter codeword
     NumOfdmSymbols = 80       # fewer OFDM symbols
     nInternalUnits = 100      # smaller reservoir
 else:
@@ -232,7 +232,7 @@ Cond_p90 = np.zeros(len(EbNoDB))
 MMSEScaler_allSNR = (No/Pi)
 R_h = np.diag(IsiMagnitude[:IsiDuration])
 
-outdir = "./results_block_fading_1x1_coded_uncode_12DB_train"
+outdir = "./results_block_fading_2x2_coded_uncode_12DB_train"
 os.makedirs(outdir, exist_ok=True)
 
 t_start_total = time.time()
@@ -379,13 +379,13 @@ for jj, ebno_db in enumerate(EbNoDB):
             # Metrics from true H
             ranks = []
             conds = []
-            gamma = (Pi[jj]/No)
+            gamma = (Pi[jj]/No) / N_t
             cap_k = []
             for k in range(N):
                 Hk = H_true[k, :, :]
                 U, S, Vh = np.linalg.svd(Hk, full_matrices=False)
-                s1 = S[0] if len(S)>0 else 0.0
-                smin = S[-1] if len(S)>1 else s1
+                s1 = S[0]
+                smin = S[-1] if len(S)>0 else 0.0
                 thr = max(1e-2*(s1**2), 10*(No/Pi[jj]))
                 ranks.append(np.sum(S**2 >= thr))
                 conds.append(s1/max(smin, 1e-12))
@@ -540,7 +540,7 @@ results_channel = {
     "cond_number": {"p50": Cond_p50.tolist(), "p90": Cond_p90.tolist()},
     "notes": "Rank and conditioning computed from per-subcarrier SVD of true H_k."
 }
-with open(f"{outdir}/channel_metrics_siso1x1.pkl", "wb") as f:
+with open(f"{outdir}/channel_metrics_mimo2x2.pkl", "wb") as f:
     pickle.dump(results_channel, f)
 
 # Plots
@@ -551,10 +551,10 @@ plt.semilogy(EbNoDB, BER_LS_ZF,    'o-',   label='LS ZF (pre-LDPC)')
 plt.semilogy(EbNoDB, BER_ESN_matched, 'gd--', label='ESN matched (pre-LDPC)')
 plt.semilogy(EbNoDB, BER_ESN_trainFixed, 'b^:', label=f'ESN @ {TRAIN_EBNO_FIXED_DB} dB (pre-LDPC)')
 plt.legend(); plt.grid(True, which='both', ls=':')
-plt.title('SISO 1x1 | Pre-LDPC BER (code bits) | FAST')
+plt.title('2x2 MIMO | Pre-LDPC BER (code bits) | FAST')
 plt.xlabel('E_b/N_0 [dB]'); plt.ylabel('Bit Error Rate')
 plt.tight_layout()
-plt.savefig(f"{outdir}/BER_preLDPC_1x1.png", dpi=150)
+plt.savefig(f"{outdir}/BER_preLDPC_2x2.png", dpi=150)
 plt.show()
 
 if USE_LDPC and np.any(BERC_ESN_matched > 0):
@@ -566,9 +566,9 @@ if USE_LDPC and np.any(BERC_ESN_matched > 0):
     plt.semilogy(EbNoDB, BERC_ESN_trainFixed, 'b^:', label=f'ESN @ {TRAIN_EBNO_FIXED_DB} dB (post-LDPC)')
     plt.grid(True, which='both', ls=':'); plt.legend()
     plt.xlabel('E_b/N_0 [dB]'); plt.ylabel('BER (info bits)')
-    plt.title('SISO 1x1 | Post-LDPC BER | FAST')
+    plt.title('2x2 MIMO | Post-LDPC BER | FAST')
     plt.tight_layout()
-    plt.savefig(f"{outdir}/BER_postLDPC_1x1.png", dpi=150)
+    plt.savefig(f"{outdir}/BER_postLDPC_2x2.png", dpi=150)
     plt.show()
 
 if USE_LDPC:
@@ -581,12 +581,12 @@ if USE_LDPC:
     plt.xlabel('E_b/N_0 [dB]'); plt.ylabel('Bit Error Rate')
     plt.title('ESN: Pre- vs Post-LDPC | FAST')
     plt.tight_layout()
-    plt.savefig(f"{outdir}/BER_ESN_pre_vs_postLDPC_1x1.png", dpi=150)
+    plt.savefig(f"{outdir}/BER_ESN_pre_vs_postLDPC_2x2.png", dpi=150)
     plt.show()
 
 print(f"\nTotal run time: {time.time()-t_start_total:.1f}s")
 print("Saved figures to:")
-print(f" - {outdir}/BER_preLDPC_1x1_FAST.png")
-print(f" - {outdir}/BER_postLDPC_1x1_FAST.png")
-print(f" - {outdir}/BER_ESN_pre_vs_postLDPC_1x1.png")
-print(f" - {outdir}/channel_metrics_siso1x1.pkl")
+print(f" - {outdir}/BER_preLDPC_2x2_FAST.png")
+print(f" - {outdir}/BER_postLDPC_2x2_FAST.png")
+print(f" - {outdir}/BER_ESN_pre_vs_postLDPC_2x2.png")
+print(f" - {outdir}/channel_metrics_mimo2x2.pkl")
