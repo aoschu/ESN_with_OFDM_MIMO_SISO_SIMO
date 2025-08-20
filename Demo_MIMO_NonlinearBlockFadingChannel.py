@@ -23,7 +23,7 @@ cFlag = False
 # Signal-to-noise ratio
 #EbNoDB = np.arange(0, 30+1, 5).astype(np.int32)
 
-EbNoDB = np.arange(25, 30+1, 5).astype(np.int32)
+EbNoDB = np.arange(0, 30+1, 3).astype(np.int32)
 '''
 MIMO Parameters
 '''
@@ -98,7 +98,7 @@ nInputUnits = N_t*2
 nOutputUnits = N_t*2
 # This is the number of neurons in the reservoir. We set this value as a
 # function of the time-domain channel input length.
-nInternalUnits = 64
+nInternalUnits = 100
 inputScaler = 0.005
 
 inputOffset = 0.0
@@ -449,9 +449,8 @@ plt.semilogy(EbNoDB, BER_ESN, 'gd--', label='ESN', linewidth=1.5)
 plt.semilogy(EbNoDB, BER_MMSE, 'rs-.', label='MMSE', linewidth=1.5)
 plt.legend()
 plt.grid(True)
-plt.title('64 Neurons in the Reservoir')
+plt.title('100 Neurons in the Reservoir')
 plt.xlabel('Signal-to-Noise Ratio[dB]')
 plt.ylabel('Bit Error Rate')
 plt.show()
-
 

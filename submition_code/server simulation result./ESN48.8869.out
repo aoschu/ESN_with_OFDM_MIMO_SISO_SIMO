@@ -1,0 +1,31 @@
+Mon Aug 18 17:16:23 2025       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.230.02             Driver Version: 535.230.02   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 4090        Off | 00000000:01:00.0 Off |                  Off |
+|  0%   49C    P2              94W / 450W |    915MiB / 24564MiB |     21%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA GeForce RTX 4090        Off | 00000000:21:00.0 Off |                  Off |
+| 45%   51C    P2              96W / 450W |    920MiB / 24564MiB |     20%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A      2788      G   /usr/lib/xorg/Xorg                            4MiB |
+|    0   N/A  N/A   1673152      C   ...our/miniconda3/envs/spy/bin/python3      898MiB |
+|    1   N/A  N/A      2788      G   /usr/lib/xorg/Xorg                            9MiB |
+|    1   N/A  N/A      2958      G   /usr/bin/gnome-shell                         10MiB |
+|    1   N/A  N/A   1673150      C   ...our/miniconda3/envs/spy/bin/python3      884MiB |
++---------------------------------------------------------------------------------------+
+mumbai
+mumbai
+Mon Aug 18 05:16:25 PM CEST 2025: Finished jobs!

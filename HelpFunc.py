@@ -185,4 +185,3 @@ class HelpFunc():
         Delay_Maxx = Delay_Max[Delay_Idx]
 
         return [ESN_input, ESN_output, esn, Delay, Delay_Idx, Delay_Minn,  Delay_Maxx, nForgetPoints, NMSE_ESN]
-

@@ -1,0 +1,1 @@
+<sionna.utils.plotting.PlotBER object at 0x708add8efee0>

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/mondal/ESN_time_domain/Demo_MIMO_NonlinearBlockFadingChannel.py", line 337, in <module>
+    x_hat_ESN_temp = trainedEsn.predict(ESN_input, nForgetPoints, continuation=False)
+TypeError: ESN.predict() got multiple values for argument 'continuation'
+srun: error: fuchu: task 0: Exited with exit code 1

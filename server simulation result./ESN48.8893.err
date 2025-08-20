@@ -1,0 +1,6 @@
+/home/mondal/ESN_time_domain/OFDM_SISO_NBF_LDPC.py:558: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/mondal/ESN_time_domain/OFDM_SISO_NBF_LDPC.py:572: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+/home/mondal/ESN_time_domain/OFDM_SISO_NBF_LDPC.py:585: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
